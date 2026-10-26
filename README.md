@@ -1,4 +1,11 @@
 # 建筑提取基线：从切片训练到工程交付
+
+> 四结构消融 → 损失函数配对实验 → ONNX 量化部署 → 边界误差归因。README 只写结论和踩过的坑，过程数据见各目录报告。
+>
+> **本仓库只含代码与报告**：权重（5.06 GB / 28 个文件）和 WHU 数据集不入库，clone 下来不能直接推理，见 [前置条件](#前置条件数据与权重)。
+
+**目录**：[结果一览](#结果一览) · [结构](#结构) · [前置条件](#前置条件数据与权重) · [快速开始](#快速开始) · [三个工程细节](#三个工程细节) · [算力与口径](#算力与口径的诚实说明)
+
 ---
 
 ## 结果一览
@@ -56,7 +63,7 @@
 
 ```
 .
-├── WUH_sub25/                  # 分层抽样后的数据子集（硬链接，不占额外空间）
+├── WUH_sub25/            ✗不入库 # 分层抽样后的数据子集（硬链接，不占额外空间）
 │   ├── train/{image,label}     # 1184 张
 │   ├── val/{image,label}       # 474 张（空图 137 张，28.9%）
 │   ├── test/{image,label}      # 604 张
@@ -80,14 +87,31 @@
 └── results/                    # 消融报告、滑窗报告
 ```
 
+`✗不入库`：`.gitignore` 排除了 `WUH_sub25/`（数据集）与所有 `*.pth` / `*.onnx`（权重与导出件，合计 5.06 GB）。`XR_1` / `XR_2` / `W4` 看着高度重复，是因为**消融的前提是"训练代码零改动"**——抽公共库就等于改上游代码，"同一份代码只切一个开关"这个前提也就没了。
+
 **设计取向：所有脚本的参数都集中在文件末尾的 `MANUAL` 字典里**，命令行参数可覆盖。理由很实际——交付给业务方时，他们改的是"数据在哪、权重在哪"，不是背 CLI 参数。
+
+---
+
+## 前置条件：数据与权重
+
+clone 下来**不能直接推理**，缺的三样东西都不是代码能补的：
+
+| 资产 | 期望位置 | 为什么不在仓库 |
+|---|---|---|
+| WHU 子集 1184 / 474 / 604 | `WUH_sub25/{split}/{image,label}` | [WHU Building Dataset](http://gpcv.whu.edu.cn/data/building_dataset.html) 仅授权学术用途、不允许再分发。抽样口径 seed 11 / 25% 分层，`manifest/*.csv` 记录每张的面积占比与来源 |
+| ImageNet 预训练主干 | `{XR_1,XR_2,W4}/SegFormer/weights/mit_bN_imagenet.pth` | 可由 HuggingFace `nvidia/mit-bN` 转换，转换脚本 `download_pretrained.py` 与该目录 `README.txt` 都在 |
+| 训练产物 `best_*.pth` | `*/run/train/exp*/weights/` | 单个 168–449 MB，超 GitHub 单文件 100 MB 上限（8 个 DeepLab 最佳权重合计约 3 GB） |
+
+**已知的可复现性缺口**：`WUH_sub25` 的抽样脚本没有归档，仓库里只有抽样口径（seed 11 / 25% 分层）和各报告里的逐图 CSV。要严格复现 1184/474/604 这个划分，得按同样的分层规则重写一次抽样。写在这里，免得下一个人以为是自己的环境问题。
 
 ---
 
 ## 快速开始
 
 ```powershell
-# 0) 环境：Python 3.10 + torch(CUDA) + onnxruntime-gpu；其余见 requirements 注释
+# 0) 环境：Python 3.10 + torch(CUDA)；其余依赖见根目录 requirements.txt
+pip install -r requirements.txt
 
 # 1) 单图/批量推理（结果落 run/predict/exp*）
 cd W4\U-Net
@@ -105,9 +129,9 @@ python to_geotiff.py --input D:\data\my_images --out D:\out\geotiff
 # 5) ONNX 导出 + 四方对比
 python export_onnx.py
 
-# 6) 错误分析
+# 6) 错误分析（--pred 指向第 2 步的批量推理输出；--pred2 是对照模型，可省）
 cd ..\..\W5
-python error_analysis.py --pred ..\_tools\w5\pred_unet --pred2 ..\_tools\w5\pred_seg
+python error_analysis.py --pred D:\out\batch01 --pred2 D:\out\batch01_seg --max-cases 20
 ```
 
 ---

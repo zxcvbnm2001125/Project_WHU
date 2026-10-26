@@ -1,0 +1,10 @@
+# 二进制文件不参与文本 diff 与换行转换，避免 .gitattributes 自动规范化带来的假 diff
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.pdf   binary
+*.pth   binary
+*.pt    binary
+*.onnx  binary
+*.zip   binary

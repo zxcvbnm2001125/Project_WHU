@@ -1,0 +1,30 @@
+# 根目录合并依赖：四个子工程各自有一份 requirements.txt（版本一致），
+# 这里额外补齐那些只在代码里 import、却没写进任何子工程清单的包
+# （onnx / onnxruntime / rasterio / scipy / tqdm 等）。
+#
+# torch 故意不锁版本：训练建议 >= 2.4（SegFormer 的 bf16 autocast 需要它，
+# 低版本会自动回退到 torch.cuda.amp）；本机实测 2.7.1 + CUDA 12.8。
+# 显卡与 CUDA 组合不同请按 https://pytorch.org 的官方命令装，
+# 不要直接 pip install -r 这一行。
+
+# ---- 训练与推理 ----
+numpy==1.24.0
+Pillow==10.1.0
+opencv_python==4.10.0.84
+matplotlib==3.7.5
+scipy
+tqdm==4.67.1
+
+# ---- 标注与数据转换 ----
+labelme==5.8.1
+
+# ---- GeoTIFF 回写 ----
+rasterio
+
+# ---- ONNX 导出与部署验证 ----
+onnx
+onnxconverter_common
+onnxruntime-gpu
+
+# ---- 可选：读取 HuggingFace 的 .safetensors 权重 ----
+safetensors
