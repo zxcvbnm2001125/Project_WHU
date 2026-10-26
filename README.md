@@ -113,6 +113,9 @@ clone 下来**不能直接推理**，缺的三样东西都不是代码能补的�
 # 0) 环境：Python 3.10 + torch(CUDA)；其余依赖见根目录 requirements.txt
 pip install -r requirements.txt
 
+# 注：各工程 MANUAL 里的 data_path / weights 默认值是作者本机的绝对路径
+#     （D:\[C]...\Project_WUD\消融实验\...），换机器跑之前先改 MANUAL，或用下面的命令行参数覆盖。
+
 # 1) 单图/批量推理（结果落 run/predict/exp*）
 cd W4\U-Net
 python predict.py --data_path D:\data\my_images --weights run\train\exp\weights\best_model_1.pth
