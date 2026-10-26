@@ -1,0 +1,16 @@
+labelme==5.8.1
+matplotlib==3.7.5
+numpy==1.24.0
+opencv_python==4.10.0.84
+Pillow==10.1.0
+
+# torch 未在此列：本项目沿用 conda 环境 unet 里已有的 PyTorch
+# （需要 >= 2.4 才能用 torch.amp.autocast(device_type="cuda", dtype=torch.bfloat16)；
+#  若版本更低，train.py 会自动回退到 torch.cuda.amp，功能不受影响）
+#
+# 可选：download_pretrained.py 若要读 .safetensors 格式的权重，需要
+# safetensors
+#
+# -i https://pypi.douban.com/simple/
+# -i https://pypi.tuna.tsinghua.edu.cn/simple
+# -i https://mirrors.aliyun.com/pypi/simple/

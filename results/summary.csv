@@ -1,0 +1,2 @@
+﻿model,params_M,PA,mIoU,iou_bg,iou_fg,mAcc,FWIoU,latency_bs1_ms,throughput_bs8_ips,infer_mem_bs8_MB,legacy_fg_iou,n_empty
+FCN (ResNet50),32.947,0.955934,0.805057,0.951847,0.658268,0.871787,0.919211,875.604,1.11,0,0.403416,137

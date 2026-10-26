@@ -1,0 +1,12 @@
+{
+  // 让 VSCode 的"运行 Python 文件"按钮（▶）把工作目录设为脚本所在目录，
+  // 这样直接运行 train.py 时，run/ 和 weights/ 会落在各自工程内，不会跑到工作区根目录。
+  // 用 launch.json 里的 F5 调试配置时同样生效（那里已显式指定 cwd）。
+  "python.terminal.executeInFileDir": true,
+  "python-envs.defaultEnvManager": "ms-python.python:conda",
+  "python-envs.defaultPackageManager": "ms-python.python:conda"
+
+  // 注：三个工程各自都有一个顶层 utils/ 与 model/ 包，同名冲突，
+  // 因此这里不配置 python.analysis.extraPaths —— 配了会让静态分析把
+  // DeepLab 的 utils.engine 错误解析到 U-Net 的 utils。运行时靠 cwd 保证正确。
+}

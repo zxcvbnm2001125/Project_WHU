@@ -1,0 +1,80 @@
+{
+  // XR_1 = 消融 A（模型对比）；XR_2 = 消融 B（CE vs CE+Dice）。
+  // 关键点：cwd 必须切到各自工程目录，否则 run/ 与 weights/ 的相对路径会落到工作区根目录。
+  // 损失模式在各自 train.py 顶部的 CONFIG 里改，或加 --dice_loss / --no-dice_loss 临时覆盖。
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "XR_1 · 1 U-Net",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/XR_1/U-Net/train.py",
+      "cwd": "${workspaceFolder}/XR_1/U-Net",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "XR_1 · 2 FCN",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/XR_1/FCN/train.py",
+      "cwd": "${workspaceFolder}/XR_1/FCN",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "XR_1 · 3 DeepLabV3+",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/XR_1/DeepLabV3Plus/train.py",
+      "cwd": "${workspaceFolder}/XR_1/DeepLabV3Plus",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "XR_1 · 4 SegFormer",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/XR_1/SegFormer/train.py",
+      "cwd": "${workspaceFolder}/XR_1/SegFormer",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "XR_2 · 5 U-Net (消融B)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/XR_2/U-Net/train.py",
+      "cwd": "${workspaceFolder}/XR_2/U-Net",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "XR_2 · 6 FCN (消融B)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/XR_2/FCN/train.py",
+      "cwd": "${workspaceFolder}/XR_2/FCN",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "XR_2 · 7 DeepLabV3+ (消融B)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/XR_2/DeepLabV3Plus/train.py",
+      "cwd": "${workspaceFolder}/XR_2/DeepLabV3Plus",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "XR_2 · 8 SegFormer (消融B)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/XR_2/SegFormer/train.py",
+      "cwd": "${workspaceFolder}/XR_2/SegFormer",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    }
+  ]
+}

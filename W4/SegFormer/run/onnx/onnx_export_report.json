@@ -1,0 +1,192 @@
+{
+  "model": "segformer_b1",
+  "weights": "D:\\[C]Remote_Sencing_Projection\\Project_WUD\\消融实验\\W4\\SegFormer\\run\\train\\exp\\weights\\best_model_2.pth",
+  "onnx": "d:\\[C]Remote_Sencing_Projection\\Project_WUD\\消融实验\\W4\\SegFormer\\run\\onnx\\segformer_b1.onnx",
+  "exporter": "torchscript",
+  "graph": {
+    "opset": [
+      17
+    ],
+    "ir_version": 8,
+    "producer": "pytorch 2.14.0",
+    "inputs": [
+      {
+        "name": "input",
+        "shape": [
+          "batch",
+          3,
+          512,
+          512
+        ],
+        "dtype": 1
+      }
+    ],
+    "outputs": [
+      {
+        "name": "logits",
+        "shape": [
+          "batch",
+          "Resizelogits_dim_1",
+          "Resizelogits_dim_2",
+          "Resizelogits_dim_3"
+        ]
+      }
+    ],
+    "nodes": 1230,
+    "size_mb": 52.37904357910156
+  },
+  "norm": "imagenet",
+  "side": 512,
+  "verify": {
+    "n_files": 12,
+    "argmax_diff_px": 0,
+    "total_px": 3145728,
+    "max_abs_logit_diff": 1.329183578491211e-05,
+    "pipeline_diff_px": 0,
+    "per_file": [
+      {
+        "file": "val_0.tif",
+        "argmax_diff_px": 0,
+        "pipeline_diff_px": 0,
+        "fg_ratio_ort": 0.0
+      },
+      {
+        "file": "val_10.tif",
+        "argmax_diff_px": 0,
+        "pipeline_diff_px": 0,
+        "fg_ratio_ort": 0.0
+      },
+      {
+        "file": "val_100.tif",
+        "argmax_diff_px": 0,
+        "pipeline_diff_px": 0,
+        "fg_ratio_ort": 0.0
+      },
+      {
+        "file": "val_1001.tif",
+        "argmax_diff_px": 0,
+        "pipeline_diff_px": 0,
+        "fg_ratio_ort": 0.039288
+      },
+      {
+        "file": "val_1005.tif",
+        "argmax_diff_px": 0,
+        "pipeline_diff_px": 0,
+        "fg_ratio_ort": 0.005257
+      },
+      {
+        "file": "val_1006.tif",
+        "argmax_diff_px": 0,
+        "pipeline_diff_px": 0,
+        "fg_ratio_ort": 0.14888
+      },
+      {
+        "file": "val_1011.tif",
+        "argmax_diff_px": 0,
+        "pipeline_diff_px": 0,
+        "fg_ratio_ort": 0.009438
+      },
+      {
+        "file": "val_1012.tif",
+        "argmax_diff_px": 0,
+        "pipeline_diff_px": 0,
+        "fg_ratio_ort": 0.010117
+      },
+      {
+        "file": "val_1013.tif",
+        "argmax_diff_px": 0,
+        "pipeline_diff_px": 0,
+        "fg_ratio_ort": 0.085804
+      },
+      {
+        "file": "val_1014.tif",
+        "argmax_diff_px": 0,
+        "pipeline_diff_px": 0,
+        "fg_ratio_ort": 0.017429
+      },
+      {
+        "file": "val_1015.tif",
+        "argmax_diff_px": 0,
+        "pipeline_diff_px": 0,
+        "fg_ratio_ort": 0.248089
+      },
+      {
+        "file": "val_1018.tif",
+        "argmax_diff_px": 0,
+        "pipeline_diff_px": 0,
+        "fg_ratio_ort": 0.0
+      }
+    ]
+  },
+  "metric": {
+    "mean_fg_iou_torch": 0.6610253901053285,
+    "mean_fg_iou_ort": 0.6610253901053285,
+    "n_with_gt": 9
+  },
+  "bench": {
+    "torch_fp32_gpu_bs1": {
+      "batch": 1,
+      "latency_ms_median": 10.13,
+      "latency_ms_p90": 10.37,
+      "throughput_img_s": 98.69
+    },
+    "torch_fp32_gpu_bs8": {
+      "batch": 8,
+      "latency_ms_median": 81.3,
+      "latency_ms_p90": 81.52,
+      "throughput_img_s": 98.4
+    },
+    "torch_fp16_gpu_bs1": {
+      "batch": 1,
+      "latency_ms_median": 6.7,
+      "latency_ms_p90": 6.9,
+      "throughput_img_s": 149.21
+    },
+    "torch_fp16_gpu_bs8": {
+      "batch": 8,
+      "latency_ms_median": 41.48,
+      "latency_ms_p90": 41.71,
+      "throughput_img_s": 192.85
+    },
+    "ort_fp32_cuda_bs1": {
+      "batch": 1,
+      "latency_ms_median": 8.71,
+      "latency_ms_p90": 8.85,
+      "throughput_img_s": 114.78
+    },
+    "ort_fp32_cuda_bs8": {
+      "batch": 8,
+      "latency_ms_median": 93.39,
+      "latency_ms_p90": 93.53,
+      "throughput_img_s": 85.66
+    },
+    "ort_fp16_cuda_bs1": {
+      "batch": 1,
+      "latency_ms_median": 6.79,
+      "latency_ms_p90": 6.98,
+      "throughput_img_s": 147.32
+    },
+    "ort_fp16_cuda_bs8": {
+      "batch": 8,
+      "latency_ms_median": 52.96,
+      "latency_ms_p90": 53.2,
+      "throughput_img_s": 151.05
+    }
+  },
+  "fp16": {
+    "graph": "d:\\[C]Remote_Sencing_Projection\\Project_WUD\\消融实验\\W4\\SegFormer\\run\\onnx\\segformer_b1_fp16.onnx",
+    "converter": "onnxruntime.transformers",
+    "argmax_diff_px": 0,
+    "max_abs_logit_diff": 0.009373188018798828
+  },
+  "ort": {
+    "ep": "cuda",
+    "libs": null,
+    "version": "1.23.2"
+  },
+  "env": {
+    "torch": "2.14.0+cu126",
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU"
+  }
+}
